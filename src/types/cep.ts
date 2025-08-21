@@ -34,4 +34,5 @@ export interface BuscaHistorico {
   tipoBusca: TipoBusca;
   resultados: number;
   timestamp: number;
+  cep?: string;
 }

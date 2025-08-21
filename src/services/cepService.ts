@@ -131,6 +131,7 @@ export const fetchCepByCode = async (cep: string): Promise<Endereco | null> => {
       tipoBusca: TipoBusca.CEP,
       resultados: 1,
       timestamp: Date.now(),
+      cep: formatCep(data.cep),
     });
     
     return mapViaCepResponse(data);
@@ -173,6 +174,7 @@ export const fetchAddressByStreet = async (
       tipoBusca: TipoBusca.LOGRADOURO,
       resultados: data.length || 0,
       timestamp: Date.now(),
+      cep: data.length > 0 ? formatCep(data[0].cep) : undefined,
     });
     
     return data.map(mapViaCepResponse);

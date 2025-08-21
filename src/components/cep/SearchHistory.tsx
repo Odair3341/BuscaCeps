@@ -42,16 +42,16 @@ const SearchHistory = () => {
     }
   };
   
-  const getTipoBuscaColor = (tipo: TipoBusca) => {
+  const getTipoBuscaVariant = (tipo: TipoBusca): 'default' | 'secondary' | 'destructive' | 'outline' => {
     switch (tipo) {
       case TipoBusca.CEP:
-        return 'blue';
+        return 'default';
       case TipoBusca.LOGRADOURO:
-        return 'green';
+        return 'secondary';
       case TipoBusca.ENDERECO_COMPLETO:
-        return 'purple';
+        return 'outline';
       default:
-        return 'gray';
+        return 'secondary';
     }
   };
   
@@ -80,10 +80,13 @@ const SearchHistory = () => {
             >
               <div>
                 <div className="flex items-center gap-2">
-                  <Badge variant={getTipoBuscaColor(item.tipoBusca) === 'gray' ? 'secondary' : 'default'}>
+                  <Badge variant={getTipoBuscaVariant(item.tipoBusca)}>
                     {getTipoBuscaLabel(item.tipoBusca)}
                   </Badge>
                   <span className="font-medium">{item.termoBusca}</span>
+                  {item.cep && (
+                    <span className="text-sm text-gray-500">{item.cep}</span>
+                  )}
                 </div>
                 <div className="flex gap-4 mt-1 text-sm text-gray-600">
                   <span>{formatTimestamp(item.timestamp)}</span>
