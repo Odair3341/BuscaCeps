@@ -125,16 +125,17 @@ export const fetchCepByCode = async (cep: string): Promise<Endereco | null> => {
       throw new Error('CEP não encontrado');
     }
     
+    const endereco = mapViaCepResponse(data);
     // Save search to history
     saveToHistory({
       termoBusca: cleanCep,
       tipoBusca: TipoBusca.CEP,
       resultados: 1,
       timestamp: Date.now(),
-      cep: formatCep(data.cep),
+      enderecos: [endereco],
     });
     
-    return mapViaCepResponse(data);
+    return endereco;
   } catch (error) {
     console.error('Erro ao buscar CEP:', error);
     return null;
@@ -168,16 +169,17 @@ export const fetchAddressByStreet = async (
       throw new Error('Endereço não encontrado');
     }
     
+    const enderecos = data.map(mapViaCepResponse);
     // Save search to history
     saveToHistory({
       termoBusca: `${street}, ${city}/${uf}`,
       tipoBusca: TipoBusca.LOGRADOURO,
-      resultados: data.length || 0,
+      resultados: enderecos.length || 0,
       timestamp: Date.now(),
-      cep: data.length > 0 ? formatCep(data[0].cep) : undefined,
+      enderecos: enderecos,
     });
     
-    return data.map(mapViaCepResponse);
+    return enderecos;
   } catch (error) {
     console.error('Erro ao buscar endereço:', error);
     return [];
