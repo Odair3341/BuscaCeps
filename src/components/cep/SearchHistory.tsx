@@ -95,7 +95,7 @@ const SearchHistory = () => {
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 bg-white">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {item.enderecos.map((endereco) => (
+                  {item.enderecos && Array.isArray(item.enderecos) && item.enderecos.map((endereco) => (
                     <ResultCard key={endereco.cep} endereco={endereco} />
                   ))}
                 </div>
